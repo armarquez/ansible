@@ -92,15 +92,6 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-  unifi:
-    image: linuxserver/unifi
-    container_name: unifi
-    network_mode: host
-    volumes:
-      - /opt/appdata/unifi:/config
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
   deluge:
     image: linuxserver/deluge
     container_name: deluge
@@ -143,17 +134,6 @@ services:
       - /opt/appdata/smokeping/data:/data
     ports:
       - 27025:80
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-    restart: always
-  quassel:
-    image: linuxserver/quassel-core
-    container_name: quassel
-    volumes:
-      - /opt/appdata/quassel:/config
-    ports:
-      - 27023:4242
     environment:
       - PUID=${PUID}
       - PGID=${PGID}

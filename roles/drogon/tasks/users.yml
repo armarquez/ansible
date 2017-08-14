@@ -1,6 +1,6 @@
 ---
-- name: create user alex
+- name: create user boogey
   user:
-    name: alex
+    name: boogey 
     state: present
     groups: "sudo,docker"
