@@ -36,7 +36,7 @@ services:
       - plex
     volumes:
       - /opt/appdata/plexrequests:/config
-      - /mnt/storage/tv:/tv
+      - /mnt/storage/media/tv:/tv
     ports:
       - 27026:3000
     links:
@@ -65,7 +65,7 @@ services:
       - nzbget
     volumes:
       - /opt/appdata/sonarr:/config
-      - /mnt/storage/tv:/tv
+      - /mnt/storage/media/tv:/tv
       - /mnt/disk1/downloads/complete/tv:/downloads
     ports:
       - 27021:8989
@@ -83,7 +83,7 @@ services:
     volumes:
       - /opt/appdata/couchpotato:/config
       - /mnt/disk1/downloads/complete/movies:/downloads
-      - /mnt/storage/movies:/movies
+      - /mnt/storage/media/movies:/movies
     ports:
       - 27022:5050
     links:
@@ -111,7 +111,7 @@ services:
       - 27027:8080
     volumes:
       - /opt/appdata/booksonic:/var/booksonic
-      - /mnt/storage/audiobooks:/audiobooks
+      - /mnt/storage/media/audiobooks:/audiobooks
     restart: always
   sync:
     image: linuxserver/resilio-sync
@@ -162,7 +162,7 @@ services:
     container_name: radarr
     volumes:
       - /opt/appdata/radarr:/config
-      - /mnt/storage/movies:/movies
+      - /mnt/storage/media/movies:/movies
       - /mnt/disk1/downloads/complete/movies:/downloads
     ports:
       - 7878:7878
