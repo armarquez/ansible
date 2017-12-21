@@ -7,10 +7,11 @@ services:
     volumes:
       - /opt/appdata/plex:/config
       - /mnt/storage:/data
+      - /mnt/disk1/transcode:/transcode
     network_mode: host
     restart: always
     environment:
-      - PLEX_CLAIM="nope"
+      - PLEX_CLAIM=${PLEX_CLAIM_TOKEN}
       - PUID=${PUID}
       - PGID=${PGID}
   plexpy:
@@ -50,7 +51,7 @@ services:
     container_name: nzbget
     volumes:
       - /opt/appdata/nzbget/config:/config
-      - /opt/downloads:/downloads
+      - /mnt/disk1/downloads:/downloads
       - /mnt/disk1/downloads/complete:/downloads/complete
     ports:
       - 27020:6789
@@ -66,7 +67,7 @@ services:
     volumes:
       - /opt/appdata/sonarr:/config
       - /mnt/storage/media/tv:/tv
-      - /mnt/disk1/downloads/complete/tv:/downloads
+      - /mnt/disk1/downloads/complete:/downloads/complete
     ports:
       - 27021:8989
     links:
@@ -82,7 +83,7 @@ services:
       - nzbget
     volumes:
       - /opt/appdata/couchpotato:/config
-      - /mnt/disk1/downloads/complete/movies:/downloads
+      - /mnt/disk1/downloads/complete:/downloads/complete
       - /mnt/storage/media/movies:/movies
     ports:
       - 27022:5050
@@ -105,13 +106,16 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
   booksonic:
-    image: ironicbadger/booksonic
+    image: linuxserver/booksonic
     container_name: booksonic
     ports:
       - 27027:8080
     volumes:
       - /opt/appdata/booksonic:/var/booksonic
       - /mnt/storage/media/audiobooks:/audiobooks
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
     restart: always
   sync:
     image: linuxserver/resilio-sync
@@ -163,7 +167,7 @@ services:
     volumes:
       - /opt/appdata/radarr:/config
       - /mnt/storage/media/movies:/movies
-      - /mnt/disk1/downloads/complete/movies:/downloads
+      - /mnt/disk1/downloads/complete:/downloads/complete
     ports:
       - 7878:7878
     environment:
@@ -171,3 +175,12 @@ services:
       - PGID=${PGID}
     restart:
       always
+  unifi:
+    image: linuxserver/unifi
+    container_name: unifi
+    network_mode: host
+    volumes:
+      - /opt/appdata/unifi:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
