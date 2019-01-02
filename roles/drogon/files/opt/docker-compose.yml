@@ -173,8 +173,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-    restart:
-      always
+    restart: always
   unifi:
     image: linuxserver/unifi
     container_name: unifi
@@ -184,3 +183,15 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
+  calibre:
+    image: linuxserver/calibre-web
+    container_name: calibre-web
+    volumes:
+      - /opt/appdata/calibre-web:/config
+      - /mnt/storage/media/books:/books
+    ports:
+      - 27030:8083
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    restart: always
