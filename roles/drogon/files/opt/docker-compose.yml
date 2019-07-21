@@ -7,7 +7,6 @@ services:
     volumes:
       - /opt/appdata/plex:/config
       - /mnt/storage:/data
-      - /mnt/disk1/transcode:/transcode
     network_mode: host
     restart: always
     environment:
@@ -30,16 +29,16 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-  plexrequests:
-    image: linuxserver/plexrequests
-    container_name: plexrequests
+  ombi:
+    image: linuxserver/ombi
+    container_name: ombi
     depends_on:
       - plex
     volumes:
-      - /opt/appdata/plexrequests:/config
+      - /opt/appdata/ombi:/config
       - /mnt/storage/media/tv:/tv
     ports:
-      - 27026:3000
+      - 27026:3579
     links:
       - plex
     restart: always
@@ -84,6 +83,7 @@ services:
     volumes:
       - /opt/appdata/couchpotato:/config
       - /mnt/disk1/downloads/complete:/downloads/complete
+      - /mnt/disk1/downloads/completed:/downloads/completed
       - /mnt/storage/media/movies:/movies
     ports:
       - 27022:5050
@@ -168,6 +168,7 @@ services:
       - /opt/appdata/radarr:/config
       - /mnt/storage/media/movies:/movies
       - /mnt/disk1/downloads/complete:/downloads/complete
+      - /mnt/disk1/downloads/completed:/downloads/completed
     ports:
       - 7878:7878
     environment:
@@ -175,12 +176,22 @@ services:
       - PGID=${PGID}
     restart:
       always
-  unifi:
-    image: linuxserver/unifi
-    container_name: unifi
+  unifi-controller:
+    image: linuxserver/unifi-controller
+    container_name: unifi-controller
     network_mode: host
     volumes:
       - /opt/appdata/unifi:/config
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8081:8081
+      - 8443:8443
+      - 8843:8843
+      - 8880:8880
+      - 6789:6789
+    restart: unless-stopped
