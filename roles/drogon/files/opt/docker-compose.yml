@@ -174,15 +174,25 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     restart: always
-  unifi:
-    image: linuxserver/unifi
-    container_name: unifi
+  unifi-controller:
+    image: linuxserver/unifi-controller
+    container_name: unifi-controller
     network_mode: host
     volumes:
       - /opt/appdata/unifi:/config
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8081:8081
+      - 8443:8443
+      - 8843:8843
+      - 8880:8880
+      - 6789:6789
+    restart: unless-stopped
   calibre:
     image: linuxserver/calibre-web
     container_name: calibre-web
