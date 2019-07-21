@@ -7,6 +7,7 @@ services:
     volumes:
       - /opt/appdata/plex:/config
       - /mnt/storage:/data
+      - /mnt/disk1/transcode:/transcode
     network_mode: host
     restart: always
     environment:
@@ -29,16 +30,16 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-  ombi:
-    image: linuxserver/ombi
-    container_name: ombi
+  plexrequests:
+    image: linuxserver/plexrequests
+    container_name: plexrequests
     depends_on:
       - plex
     volumes:
-      - /opt/appdata/ombi:/config
+      - /opt/appdata/plexrequests:/config
       - /mnt/storage/media/tv:/tv
     ports:
-      - 27026:3579
+      - 27026:3000
     links:
       - plex
     restart: always
@@ -83,7 +84,6 @@ services:
     volumes:
       - /opt/appdata/couchpotato:/config
       - /mnt/disk1/downloads/complete:/downloads/complete
-      - /mnt/disk1/downloads/completed:/downloads/completed
       - /mnt/storage/media/movies:/movies
     ports:
       - 27022:5050
@@ -168,30 +168,30 @@ services:
       - /opt/appdata/radarr:/config
       - /mnt/storage/media/movies:/movies
       - /mnt/disk1/downloads/complete:/downloads/complete
-      - /mnt/disk1/downloads/completed:/downloads/completed
     ports:
       - 7878:7878
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-    restart:
-      always
-  unifi-controller:
-    image: linuxserver/unifi-controller
-    container_name: unifi-controller
+    restart: always
+  unifi:
+    image: linuxserver/unifi
+    container_name: unifi
     network_mode: host
     volumes:
       - /opt/appdata/unifi:/config
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
+  calibre:
+    image: linuxserver/calibre-web
+    container_name: calibre-web
+    volumes:
+      - /opt/appdata/calibre-web:/config
+      - /mnt/storage/media/books:/books
     ports:
-      - 3478:3478/udp
-      - 10001:10001/udp
-      - 8080:8080
-      - 8081:8081
-      - 8443:8443
-      - 8843:8843
-      - 8880:8880
-      - 6789:6789
-    restart: unless-stopped
+      - 27030:8083
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    restart: always
