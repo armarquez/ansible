@@ -30,22 +30,22 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-  plexrequests:
-    image: linuxserver/plexrequests
-    container_name: plexrequests
-    depends_on:
-      - plex
-    volumes:
-      - /opt/appdata/plexrequests:/config
-      - /mnt/storage/media/tv:/tv
-    ports:
-      - 27026:3000
-    links:
-      - plex
-    restart: always
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+  # plexrequests:
+  #   image: linuxserver/ombi
+  #   container_name: ombi
+  #   depends_on:
+  #     - plex
+  #   volumes:
+  #     - /opt/appdata/plexrequests:/config
+  #     - /mnt/storage/media/tv:/tv
+  #   ports:
+  #     - 27026:3000
+  #   links:
+  #     - plex
+  #   restart: always
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
   nzbget:
     image: linuxserver/nzbget
     container_name: nzbget
