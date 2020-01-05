@@ -53,11 +53,12 @@
     # change to 'mounted' to auto mount
     state: present
   with_items:
-    - { name: /mnt/parity1, src: /dev/disk/by-id/wwn-0x50014ee263d58ee1-part1, fs: ext4}
+    - { name: /mnt/parity1, src: /dev/disk/by-id/ata-WDC_WD80EFAX-68KNBN0_VAJKEBUL-part1, fs: ext4}
     - { name: /mnt/disk1, src: /dev/disk/by-id/wwn-0x5000cca369d1150c-part1, fs: ext4}
     - { name: /mnt/disk2, src: /dev/disk/by-id/ata-SAMSUNG_HD204UI_S2H7J9FB202664-part1, fs: ext4}
     - { name: /mnt/disk3, src: /dev/disk/by-id/wwn-0x50014ee2b93f2e35-part1, fs: ext4}
     - { name: /mnt/disk4, src: /dev/disk/by-id/wwn-0x50024e9003e61dcc-part1, fs: ext4}
+    #- { name: /mnt/disk5, src: /dev/disk/by-id/wwn-0x50014ee263d58ee1-part1, fs: ext4}
 
 - name: mount mergerfs array
   mount:
